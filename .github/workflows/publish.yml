@@ -33,7 +33,7 @@ jobs:
         run: pnpm run build
 
       - name: Run tests
-        run: pnpm run test
+        run: pnpm run test --if-present
 
       - name: Create or Publish Release
         uses: changesets/action@v1
