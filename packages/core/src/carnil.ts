@@ -55,7 +55,20 @@ class DefaultProviderRegistry implements ProviderRegistry {
     if (!factory) {
       throw new CarnilError(`Provider '${name}' not found`, 'PROVIDER_NOT_FOUND');
     }
-    return factory.create(config);
+
+    // Support both factory objects with a create method and direct class constructors
+    if (typeof factory === 'function') {
+      // It's a class constructor
+      return new factory(config);
+    } else if (factory && typeof factory.create === 'function') {
+      // It's a factory object with a create method
+      return factory.create(config);
+    } else {
+      throw new CarnilError(
+        `Invalid provider factory for '${name}'. Expected a class constructor or an object with a create method.`,
+        'INVALID_PROVIDER_FACTORY'
+      );
+    }
   }
 }
 
