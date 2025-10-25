@@ -99,13 +99,13 @@ importers:
 
   examples/basic-usage:
     dependencies:
-      '@carnil/':
+      '@carnil':
         specifier: ^0.1.0
         version: link:../..
 
   examples/nextjs-app:
     dependencies:
-      '@carnil/':
+      '@carnil':
         specifier: ^0.1.0
         version: link:../..
       next:
@@ -139,7 +139,7 @@ importers:
 
   examples/react-example:
     dependencies:
-      '@carnil/':
+      '@carnil':
         specifier: ^0.1.0
         version: link:../..
       react:
@@ -154,7 +154,7 @@ importers:
 
   examples/saas-dashboard:
     dependencies:
-      '@carnil/':
+      '@carnil':
         specifier: ^0.1.0
         version: link:../..
       autoprefixer:
@@ -3495,7 +3495,7 @@ packages:
   /@types/connect-history-api-fallback@1.5.4:
     resolution: {integrity: sha512-n6Cr2xS1h4uAulPRdlw6Jl6s1oG8KrVilPN2yUITEs+K48EzMJJ3W1xy8K5eWuFvjp3R74AOIGSmp2UfBJ8HFw==}
     dependencies:
-      '@types/express-serve-static-core': 4.19.7
+      '@types/express-serve-static-core': 5.1.0
       '@types/node': 20.19.23
     dev: false
 
@@ -3581,6 +3581,15 @@ packages:
       '@types/qs': 6.14.0
       '@types/range-parser': 1.2.7
       '@types/send': 1.2.1
+
+  /@types/express-serve-static-core@5.1.0:
+    resolution: {integrity: sha512-jnHMsrd0Mwa9Cf4IdOzbz543y4XJepXrbia2T4b6+spXC2We3t1y6K44D3mR8XMFSXMCf3/l7rCgddfx7UNVBA==}
+    dependencies:
+      '@types/node': 20.19.23
+      '@types/qs': 6.14.0
+      '@types/range-parser': 1.2.7
+      '@types/send': 1.2.1
+    dev: false
 
   /@types/express@4.17.24:
     resolution: {integrity: sha512-Mbrt4SRlXSTWryOnHAh2d4UQ/E7n9lZyGSi6KgX+4hkuL9soYbLOVXVhnk/ODp12YsGc95f4pOvqywJ6kngUwg==}
@@ -5294,7 +5303,7 @@ packages:
     resolution: {integrity: sha512-AF3r7P5dWxL8MxyITRMlORQNaOA2IkAFaTr4k7BUumjPtRpGDTZpl0Pb1XCO6JeDCBdp126Cgs9sMxqSjgYyRg==}
     engines: {node: '>= 0.6'}
     dependencies:
-      mime-db: 1.52.0
+      mime-db: 1.54.0
     dev: false
 
   /compression@1.8.1:
@@ -9116,6 +9125,11 @@ packages:
 
   /mime-db@1.52.0:
     resolution: {integrity: sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==}
+    engines: {node: '>= 0.6'}
+    dev: false
+
+  /mime-db@1.54.0:
+    resolution: {integrity: sha512-aU5EJuIN2WDemCcAp2vFBfp/m4EAhWJnUNSSw0ixs7/kXbd6Pg64EmwJkNdFhB8aWt1sH2CTXrLxo/iAGV3oPQ==}
     engines: {node: '>= 0.6'}
     dev: false
 
