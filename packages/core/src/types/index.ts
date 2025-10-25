@@ -131,7 +131,16 @@ export const DisputeSchema = z.object({
   paymentId: z.string(),
   amount: z.number(),
   currency: z.string(),
-  status: z.enum(['warning_needs_response', 'warning_under_review', 'warning_closed', 'needs_response', 'under_review', 'charge_refunded', 'won', 'lost']),
+  status: z.enum([
+    'warning_needs_response',
+    'warning_under_review',
+    'warning_closed',
+    'needs_response',
+    'under_review',
+    'charge_refunded',
+    'won',
+    'lost',
+  ]),
   reason: z.enum([
     'credit_not_processed',
     'duplicate',
@@ -217,10 +226,12 @@ export const ListRequestSchema = z.object({
   limit: z.number().min(1).max(100).default(10),
   startingAfter: z.string().optional(),
   endingBefore: z.string().optional(),
-  created: z.object({
-    gte: z.date().optional(),
-    lte: z.date().optional(),
-  }).optional(),
+  created: z
+    .object({
+      gte: z.date().optional(),
+      lte: z.date().optional(),
+    })
+    .optional(),
 });
 
 export const CustomerListRequestSchema = ListRequestSchema.extend({
@@ -300,6 +311,108 @@ export type CreatePaymentIntentRequest = z.infer<typeof CreatePaymentIntentReque
 export type CreateSubscriptionRequest = z.infer<typeof CreateSubscriptionRequestSchema>;
 export type CreateInvoiceRequest = z.infer<typeof CreateInvoiceRequestSchema>;
 export type CreateRefundRequest = z.infer<typeof CreateRefundRequestSchema>;
+
+// ============================================================================
+// Parameter Types for Provider Interfaces
+// ============================================================================
+
+// Customer parameter types
+export type CreateCustomerParams = CreateCustomerRequest;
+export type UpdateCustomerParams = UpdateCustomerRequest;
+export type RetrieveCustomerParams = { id: string };
+export type ListCustomersParams = CustomerListRequest;
+
+// Payment Method parameter types
+export type CreatePaymentMethodParams = {
+  customerId: string;
+  type: 'card' | 'bank_account' | 'upi' | 'wallet' | 'netbanking' | 'emi';
+  token?: string;
+  metadata?: Record<string, any>;
+};
+export type UpdatePaymentMethodParams = {
+  metadata?: Record<string, any>;
+};
+export type RetrievePaymentMethodParams = { id: string };
+export type ListPaymentMethodsParams = { customerId: string };
+
+// Product parameter types
+export type Product = {
+  id: string;
+  name: string;
+  description?: string;
+  metadata?: Record<string, any>;
+  created: Date;
+  updated: Date;
+  provider: string;
+  providerId: string;
+};
+export type CreateProductParams = {
+  name: string;
+  description?: string;
+  metadata?: Record<string, any>;
+};
+export type UpdateProductParams = {
+  name?: string;
+  description?: string;
+  metadata?: Record<string, any>;
+};
+export type RetrieveProductParams = { id: string };
+export type ListProductsParams = { limit?: number; startingAfter?: string };
+
+// Price parameter types
+export type Price = {
+  id: string;
+  productId: string;
+  amount: number;
+  currency: string;
+  interval?: 'day' | 'week' | 'month' | 'year';
+  intervalCount?: number;
+  metadata?: Record<string, any>;
+  created: Date;
+  updated: Date;
+  provider: string;
+  providerId: string;
+};
+export type CreatePriceParams = {
+  productId: string;
+  amount: number;
+  currency: string;
+  interval?: 'day' | 'week' | 'month' | 'year';
+  intervalCount?: number;
+  metadata?: Record<string, any>;
+};
+export type UpdatePriceParams = {
+  metadata?: Record<string, any>;
+};
+export type RetrievePriceParams = { id: string };
+export type ListPricesParams = { productId?: string; limit?: number; startingAfter?: string };
+
+// Subscription parameter types
+export type CreateSubscriptionParams = CreateSubscriptionRequest;
+export type UpdateSubscriptionParams = Partial<CreateSubscriptionRequest>;
+export type RetrieveSubscriptionParams = { id: string };
+export type ListSubscriptionsParams = SubscriptionListRequest;
+
+// Invoice parameter types
+export type CreateInvoiceParams = CreateInvoiceRequest;
+export type UpdateInvoiceParams = Partial<CreateInvoiceRequest>;
+export type RetrieveInvoiceParams = { id: string };
+export type ListInvoicesParams = InvoiceListRequest;
+
+// Refund parameter types
+export type CreateRefundParams = CreateRefundRequest;
+export type RetrieveRefundParams = { id: string };
+export type ListRefundsParams = { paymentId?: string; limit?: number; startingAfter?: string };
+
+// Dispute parameter types
+export type RetrieveDisputeParams = { id: string };
+export type ListDisputesParams = { limit?: number; startingAfter?: string };
+
+// Payment Intent parameter types
+export type CreatePaymentIntentParams = CreatePaymentIntentRequest;
+export type UpdatePaymentIntentParams = Partial<CreatePaymentIntentRequest>;
+export type RetrievePaymentIntentParams = { id: string };
+export type ListPaymentIntentsParams = PaymentIntentListRequest;
 
 export type ListRequest = z.infer<typeof ListRequestSchema>;
 export type CustomerListRequest = z.infer<typeof CustomerListRequestSchema>;

@@ -46,6 +46,7 @@ export type {
   AIUsageMetrics,
   CarnilConfig,
   CarnilResponse,
+  ProviderConfig,
 } from './types';
 
 export type {

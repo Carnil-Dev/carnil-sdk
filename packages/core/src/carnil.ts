@@ -5,7 +5,6 @@ import type {
   Subscription,
   Invoice,
   Refund,
-  Dispute,
   CreateCustomerRequest,
   UpdateCustomerRequest,
   CreatePaymentIntentRequest,
@@ -24,17 +23,7 @@ import type {
   CarnilResponse,
 } from './types';
 
-import type {
-  CarnilProvider,
-  ProviderRegistry,
-  CustomerProvider,
-  PaymentProvider,
-  SubscriptionProvider,
-  InvoiceProvider,
-  RefundProvider,
-  DisputeProvider,
-  AnalyticsProvider,
-} from './providers/base';
+import type { CarnilProvider, ProviderRegistry } from './providers/base';
 
 import { CarnilError, handleError } from './errors';
 
@@ -55,6 +44,10 @@ class DefaultProviderRegistry implements ProviderRegistry {
 
   list(): string[] {
     return Array.from(this.providers.keys());
+  }
+
+  unregister(name: string): boolean {
+    return this.providers.delete(name);
   }
 
   create(name: string, config: any): CarnilProvider {
@@ -142,7 +135,7 @@ export class Carnil {
 
   async getCustomer(id: string): Promise<CarnilResponse<Customer>> {
     try {
-      const customer = await this.provider.getCustomer(id);
+      const customer = await this.provider.retrieveCustomer({ id });
       return { data: customer, success: true };
     } catch (error) {
       const carnilError = handleError(error, this.provider.name);
@@ -150,7 +143,10 @@ export class Carnil {
     }
   }
 
-  async updateCustomer(id: string, request: UpdateCustomerRequest): Promise<CarnilResponse<Customer>> {
+  async updateCustomer(
+    id: string,
+    request: UpdateCustomerRequest
+  ): Promise<CarnilResponse<Customer>> {
     try {
       const customer = await this.provider.updateCustomer(id, request);
       return { data: customer, success: true };
@@ -170,10 +166,16 @@ export class Carnil {
     }
   }
 
-  async listCustomers(request?: CustomerListRequest): Promise<CarnilResponse<ListResponse<Customer>>> {
+  async listCustomers(
+    request?: CustomerListRequest
+  ): Promise<CarnilResponse<ListResponse<Customer>>> {
     try {
       const customers = await this.provider.listCustomers(request);
-      return { data: customers, success: true };
+      // Ensure the response is wrapped in ListResponse format
+      const listResponse: ListResponse<Customer> = Array.isArray(customers)
+        ? { data: customers, hasMore: false }
+        : customers;
+      return { data: listResponse, success: true };
     } catch (error) {
       const carnilError = handleError(error, this.provider.name);
       return { data: null as any, success: false, error: carnilError.message };
@@ -186,7 +188,7 @@ export class Carnil {
 
   async listPaymentMethods(customerId: string): Promise<CarnilResponse<PaymentMethod[]>> {
     try {
-      const paymentMethods = await this.provider.listPaymentMethods(customerId);
+      const paymentMethods = await this.provider.listPaymentMethods({ customerId });
       return { data: paymentMethods, success: true };
     } catch (error) {
       const carnilError = handleError(error, this.provider.name);
@@ -194,7 +196,10 @@ export class Carnil {
     }
   }
 
-  async attachPaymentMethod(customerId: string, paymentMethodId: string): Promise<CarnilResponse<PaymentMethod>> {
+  async attachPaymentMethod(
+    customerId: string,
+    paymentMethodId: string
+  ): Promise<CarnilResponse<PaymentMethod>> {
     try {
       const paymentMethod = await this.provider.attachPaymentMethod(customerId, paymentMethodId);
       return { data: paymentMethod, success: true };
@@ -214,9 +219,15 @@ export class Carnil {
     }
   }
 
-  async setDefaultPaymentMethod(customerId: string, paymentMethodId: string): Promise<CarnilResponse<PaymentMethod>> {
+  async setDefaultPaymentMethod(
+    customerId: string,
+    paymentMethodId: string
+  ): Promise<CarnilResponse<PaymentMethod>> {
     try {
-      const paymentMethod = await this.provider.setDefaultPaymentMethod(customerId, paymentMethodId);
+      const paymentMethod = await this.provider.setDefaultPaymentMethod(
+        customerId,
+        paymentMethodId
+      );
       return { data: paymentMethod, success: true };
     } catch (error) {
       const carnilError = handleError(error, this.provider.name);
@@ -228,7 +239,9 @@ export class Carnil {
   // Payment Intent Operations
   // ========================================================================
 
-  async createPaymentIntent(request: CreatePaymentIntentRequest): Promise<CarnilResponse<PaymentIntent>> {
+  async createPaymentIntent(
+    request: CreatePaymentIntentRequest
+  ): Promise<CarnilResponse<PaymentIntent>> {
     try {
       const paymentIntent = await this.provider.createPaymentIntent(request);
       return { data: paymentIntent, success: true };
@@ -248,7 +261,10 @@ export class Carnil {
     }
   }
 
-  async updatePaymentIntent(id: string, updates: Partial<CreatePaymentIntentRequest>): Promise<CarnilResponse<PaymentIntent>> {
+  async updatePaymentIntent(
+    id: string,
+    updates: Partial<CreatePaymentIntentRequest>
+  ): Promise<CarnilResponse<PaymentIntent>> {
     try {
       const paymentIntent = await this.provider.updatePaymentIntent(id, updates);
       return { data: paymentIntent, success: true };
@@ -268,7 +284,10 @@ export class Carnil {
     }
   }
 
-  async confirmPaymentIntent(id: string, paymentMethodId?: string): Promise<CarnilResponse<PaymentIntent>> {
+  async confirmPaymentIntent(
+    id: string,
+    paymentMethodId?: string
+  ): Promise<CarnilResponse<PaymentIntent>> {
     try {
       const paymentIntent = await this.provider.confirmPaymentIntent(id, paymentMethodId);
       return { data: paymentIntent, success: true };
@@ -288,10 +307,16 @@ export class Carnil {
     }
   }
 
-  async listPaymentIntents(request?: PaymentIntentListRequest): Promise<CarnilResponse<ListResponse<PaymentIntent>>> {
+  async listPaymentIntents(
+    request?: PaymentIntentListRequest
+  ): Promise<CarnilResponse<ListResponse<PaymentIntent>>> {
     try {
       const paymentIntents = await this.provider.listPaymentIntents(request);
-      return { data: paymentIntents, success: true };
+      // Ensure the response is wrapped in ListResponse format
+      const listResponse: ListResponse<PaymentIntent> = Array.isArray(paymentIntents)
+        ? { data: paymentIntents, hasMore: false }
+        : paymentIntents;
+      return { data: listResponse, success: true };
     } catch (error) {
       const carnilError = handleError(error, this.provider.name);
       return { data: null as any, success: false, error: carnilError.message };
@@ -302,7 +327,9 @@ export class Carnil {
   // Subscription Operations
   // ========================================================================
 
-  async createSubscription(request: CreateSubscriptionRequest): Promise<CarnilResponse<Subscription>> {
+  async createSubscription(
+    request: CreateSubscriptionRequest
+  ): Promise<CarnilResponse<Subscription>> {
     try {
       const subscription = await this.provider.createSubscription(request);
       return { data: subscription, success: true };
@@ -322,7 +349,10 @@ export class Carnil {
     }
   }
 
-  async updateSubscription(id: string, updates: Partial<CreateSubscriptionRequest>): Promise<CarnilResponse<Subscription>> {
+  async updateSubscription(
+    id: string,
+    updates: Partial<CreateSubscriptionRequest>
+  ): Promise<CarnilResponse<Subscription>> {
     try {
       const subscription = await this.provider.updateSubscription(id, updates);
       return { data: subscription, success: true };
@@ -332,9 +362,9 @@ export class Carnil {
     }
   }
 
-  async cancelSubscription(id: string, immediately?: boolean): Promise<CarnilResponse<Subscription>> {
+  async cancelSubscription(id: string): Promise<CarnilResponse<Subscription>> {
     try {
-      const subscription = await this.provider.cancelSubscription(id, immediately);
+      const subscription = await this.provider.cancelSubscription(id);
       return { data: subscription, success: true };
     } catch (error) {
       const carnilError = handleError(error, this.provider.name);
@@ -342,10 +372,16 @@ export class Carnil {
     }
   }
 
-  async listSubscriptions(request?: SubscriptionListRequest): Promise<CarnilResponse<ListResponse<Subscription>>> {
+  async listSubscriptions(
+    request?: SubscriptionListRequest
+  ): Promise<CarnilResponse<ListResponse<Subscription>>> {
     try {
       const subscriptions = await this.provider.listSubscriptions(request);
-      return { data: subscriptions, success: true };
+      // Ensure the response is wrapped in ListResponse format
+      const listResponse: ListResponse<Subscription> = Array.isArray(subscriptions)
+        ? { data: subscriptions, hasMore: false }
+        : subscriptions;
+      return { data: listResponse, success: true };
     } catch (error) {
       const carnilError = handleError(error, this.provider.name);
       return { data: null as any, success: false, error: carnilError.message };
@@ -376,7 +412,10 @@ export class Carnil {
     }
   }
 
-  async updateInvoice(id: string, updates: Partial<CreateInvoiceRequest>): Promise<CarnilResponse<Invoice>> {
+  async updateInvoice(
+    id: string,
+    updates: Partial<CreateInvoiceRequest>
+  ): Promise<CarnilResponse<Invoice>> {
     try {
       const invoice = await this.provider.updateInvoice(id, updates);
       return { data: invoice, success: true };
@@ -409,7 +448,11 @@ export class Carnil {
   async listInvoices(request?: InvoiceListRequest): Promise<CarnilResponse<ListResponse<Invoice>>> {
     try {
       const invoices = await this.provider.listInvoices(request);
-      return { data: invoices, success: true };
+      // Ensure the response is wrapped in ListResponse format
+      const listResponse: ListResponse<Invoice> = Array.isArray(invoices)
+        ? { data: invoices, hasMore: false }
+        : invoices;
+      return { data: listResponse, success: true };
     } catch (error) {
       const carnilError = handleError(error, this.provider.name);
       return { data: null as any, success: false, error: carnilError.message };
@@ -442,7 +485,7 @@ export class Carnil {
 
   async listRefunds(paymentId?: string): Promise<CarnilResponse<Refund[]>> {
     try {
-      const refunds = await this.provider.listRefunds(paymentId);
+      const refunds = await this.provider.listRefunds({ paymentId });
       return { data: refunds, success: true };
     } catch (error) {
       const carnilError = handleError(error, this.provider.name);
@@ -501,7 +544,11 @@ export class Carnil {
     }
   }
 
-  async getUsageMetrics(customerId: string, featureId: string, period: string): Promise<CarnilResponse<UsageMetrics[]>> {
+  async getUsageMetrics(
+    customerId: string,
+    featureId: string,
+    period: string
+  ): Promise<CarnilResponse<UsageMetrics[]>> {
     try {
       const metrics = await this.provider.getUsageMetrics(customerId, featureId, period);
       return { data: metrics, success: true };
@@ -511,7 +558,11 @@ export class Carnil {
     }
   }
 
-  async getAIUsageMetrics(customerId: string, modelId?: string, period?: string): Promise<CarnilResponse<AIUsageMetrics[]>> {
+  async getAIUsageMetrics(
+    customerId: string,
+    modelId?: string,
+    period?: string
+  ): Promise<CarnilResponse<AIUsageMetrics[]>> {
     try {
       const metrics = await this.provider.getAIUsageMetrics(customerId, modelId, period);
       return { data: metrics, success: true };
