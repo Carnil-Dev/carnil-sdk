@@ -53,9 +53,12 @@ import { Carnil } from '@carnil/core';
 import '@carnil/stripe'; // Auto-registers Stripe provider
 
 // Initialize with Stripe
-const carnil = new Carnil('stripe', {
-  apiKey: process.env.STRIPE_SECRET_KEY!,
-  webhookSecret: process.env.STRIPE_WEBHOOK_SECRET!,
+const carnil = new Carnil({
+  provider: {
+    provider: 'stripe',
+    apiKey: process.env.STRIPE_SECRET_KEY!,
+    webhookSecret: process.env.STRIPE_WEBHOOK_SECRET!,
+  },
 });
 
 // Create a customer
@@ -66,9 +69,9 @@ const customer = await carnil.createCustomer({
 
 // Create a payment intent
 const paymentIntent = await carnil.createPaymentIntent({
+  customerId: customer.id,
   amount: 2000, // $20.00
   currency: 'usd',
-  customer: customer.id,
 });
 ```
 
@@ -105,9 +108,9 @@ function PaymentForm() {
     }
 
     const paymentIntent = await createPaymentIntent({
+      customerId: customer?.id,
       amount: 2000,
       currency: 'usd',
-      customer: customer?.id,
     });
 
     // Handle payment confirmation
@@ -216,9 +219,12 @@ function PricingPage() {
 import { Carnil } from '@carnil/core';
 import '@carnil/stripe';
 
-const carnil = new Carnil('stripe', {
-  apiKey: process.env.STRIPE_SECRET_KEY!,
-  webhookSecret: process.env.STRIPE_WEBHOOK_SECRET!,
+const carnil = new Carnil({
+  provider: {
+    provider: 'stripe',
+    apiKey: process.env.STRIPE_SECRET_KEY!,
+    webhookSecret: process.env.STRIPE_WEBHOOK_SECRET!,
+  },
 });
 ```
 
@@ -228,10 +234,13 @@ const carnil = new Carnil('stripe', {
 import { Carnil } from '@carnil/core';
 import '@carnil/razorpay';
 
-const carnil = new Carnil('razorpay', {
-  keyId: process.env.RAZORPAY_KEY_ID!,
-  keySecret: process.env.RAZORPAY_KEY_SECRET!,
-  webhookSecret: process.env.RAZORPAY_WEBHOOK_SECRET!,
+const carnil = new Carnil({
+  provider: {
+    provider: 'razorpay',
+    keyId: process.env.RAZORPAY_KEY_ID!,
+    keySecret: process.env.RAZORPAY_KEY_SECRET!,
+    webhookSecret: process.env.RAZORPAY_WEBHOOK_SECRET!,
+  },
 });
 ```
 

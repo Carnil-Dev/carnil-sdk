@@ -15,7 +15,20 @@
     "clean": "turbo run clean",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "turbo run build --filter=!@carnil/docs && changeset publish"
+    "release": "turbo run build --filter=!@carnil/docs && changeset publish",
+    "prepublishOnly": "turbo run build",
+    "publish:all": "node scripts/build-and-publish.js publish-all",
+    "publish:core": "node scripts/build-and-publish.js publish core",
+    "publish:stripe": "node scripts/build-and-publish.js publish stripe",
+    "publish:razorpay": "node scripts/build-and-publish.js publish razorpay",
+    "publish:react": "node scripts/build-and-publish.js publish react",
+    "publish:next": "node scripts/build-and-publish.js publish next",
+    "publish:adapters": "node scripts/build-and-publish.js publish adapters",
+    "publish:analytics": "node scripts/build-and-publish.js publish analytics",
+    "publish:pricing-editor": "node scripts/build-and-publish.js publish pricing-editor",
+    "publish:webhooks": "node scripts/build-and-publish.js publish webhooks",
+    "publish:compliance": "node scripts/build-and-publish.js publish compliance",
+    "publish:globalization": "node scripts/build-and-publish.js publish globalization"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.1",

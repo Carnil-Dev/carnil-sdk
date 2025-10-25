@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "Autumn": {
+      "name": "Autumn",
+      "url": "https://docs.useautumn.com/mcp",
+      "headers": {}
+    }
+  }
+}
