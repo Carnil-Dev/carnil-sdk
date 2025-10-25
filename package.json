@@ -15,7 +15,7 @@
     "clean": "turbo run clean",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "turbo run build --filter=!@carnil/docs && changeset publish --provenance",
+    "release": "turbo run build && changeset publish --provenance",
     "prepublishOnly": "turbo run build",
     "publish:all": "node scripts/build-and-publish.js publish-all",
     "publish:core": "node scripts/build-and-publish.js publish core",
