@@ -101,6 +101,7 @@ function main() {
     console.log('  node scripts/build-and-publish.js publish <package-name>');
     console.log('  node scripts/build-and-publish.js publish-all');
     console.log(`\nAvailable packages: ${packages.join(', ')}`);
+    console.log('\nRepository: https://github.com/Carnil-Dev/carnil-sdk');
   }
 }
 

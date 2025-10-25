@@ -284,8 +284,8 @@ npm test -- --testPathPattern=packages/core
 
 ## 🆘 Need Help?
 
-- [Documentation](https://docs.carnil.com)
-- [GitHub Issues](https://github.com/carnil/carnil-sdk/issues)
+- [Documentation](https://docs.carnil.dev)
+- [GitHub Issues](https://github.com/Carnil-Dev/carnil-sdk/issues)
 - [Discord Community](https://discord.gg/carnil)
 
 ---

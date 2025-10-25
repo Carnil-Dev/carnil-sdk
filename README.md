@@ -295,7 +295,7 @@ We welcome contributions! Please see our [Contributing Guide](./CONTRIBUTING.md)
 
 ```bash
 # Clone the repository
-git clone https://github.com/carnil/carnil-sdk.git
+git clone https://github.com/Carnil-Dev/carnil-sdk.git
 cd carnil-sdk
 
 # Install dependencies
@@ -314,9 +314,9 @@ MIT License - see [LICENSE](./LICENSE) for details.
 
 ## 🆘 Support
 
-- [GitHub Issues](https://github.com/carnil/carnil-sdk/issues)
+- [GitHub Issues](https://github.com/Carnil-Dev/carnil-sdk/issues)
 - [Discord Community](https://discord.gg/carnil)
-- [Documentation](https://docs.carnil.com)
+- [Documentation](https://docs.carnil.dev)
 
 ## 🗺 Roadmap
 
