@@ -1,4 +1,4 @@
-import { createCarnilHandler } from '@carnil/sdk/next';
+import { createCarnilHandler } from '@carnil//next';
 
 const handler = createCarnilHandler({
   provider: {

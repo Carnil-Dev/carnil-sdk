@@ -20,12 +20,12 @@ function runCommand(command, cwd = process.cwd()) {
 }
 
 function buildPackage() {
-  console.log('🔨 Building @carnil/sdk...');
+  console.log('🔨 Building @carnil/...');
   runCommand('pnpm build');
 }
 
 function publishPackage() {
-  console.log('📦 Publishing @carnil/sdk...');
+  console.log('📦 Publishing @carnil/...');
 
   // Check if package is already published
   try {
@@ -46,7 +46,7 @@ function publishPackage() {
     runCommand('npm publish --access public');
     console.log(`✅ Successfully published ${packageName}`);
   } catch (error) {
-    console.error(`❌ Failed to publish @carnil/sdk:`, error.message);
+    console.error(`❌ Failed to publish @carnil/:`, error.message);
   }
 }
 

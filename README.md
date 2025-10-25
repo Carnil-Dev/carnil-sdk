@@ -5,11 +5,11 @@ A unified payments SDK for Stripe, Razorpay, and other payment providers with Re
 ## Installation
 
 ```bash
-npm install @carnil/sdk
+npm install @carnil/
 # or
-yarn add @carnil/sdk
+yarn add @carnil/
 # or
-pnpm add @carnil/sdk
+pnpm add @carnil/
 ```
 
 ## Quick Start
@@ -17,7 +17,7 @@ pnpm add @carnil/sdk
 ### Basic Usage
 
 ```typescript
-import { Carnil } from '@carnil/sdk';
+import { Carnil } from '@carnil/';
 
 const carnil = new Carnil({
   provider: {
@@ -45,7 +45,7 @@ const paymentIntent = await carnil.createPaymentIntent({
 ### React Integration
 
 ```typescript
-import { CarnilProvider, useCustomer } from '@carnil/sdk/react';
+import { CarnilProvider, useCustomer } from '@carnil//react';
 
 function App() {
   return (
@@ -82,7 +82,7 @@ function PaymentForm() {
 
 ```typescript
 // app/api/carnil/route.ts
-import { createCarnilHandler } from '@carnil/sdk/next';
+import { createCarnilHandler } from '@carnil//next';
 
 const handler = createCarnilHandler({
   provider: {
@@ -112,45 +112,45 @@ The SDK is organized into modules that can be imported individually:
 ### Core Module
 
 ```typescript
-import { Carnil, CarnilError } from '@carnil/sdk';
+import { Carnil, CarnilError } from '@carnil/';
 // or
-import { Carnil, CarnilError } from '@carnil/sdk/core';
+import { Carnil, CarnilError } from '@carnil//core';
 ```
 
 ### Provider Modules
 
 ```typescript
-import { StripeProvider } from '@carnil/sdk/stripe';
-import { RazorpayProvider } from '@carnil/sdk/razorpay';
+import { StripeProvider } from '@carnil//stripe';
+import { RazorpayProvider } from '@carnil//razorpay';
 ```
 
 ### Framework Integrations
 
 ```typescript
-import { CarnilProvider, useCustomer } from '@carnil/sdk/react';
-import { createCarnilHandler } from '@carnil/sdk/next';
+import { CarnilProvider, useCustomer } from '@carnil//react';
+import { createCarnilHandler } from '@carnil//next';
 ```
 
 ### Additional Modules
 
 ```typescript
 // Analytics
-import { CustomerDashboard } from '@carnil/sdk/analytics';
+import { CustomerDashboard } from '@carnil//analytics';
 
 // Compliance
-import { AuditLogger } from '@carnil/sdk/compliance';
+import { AuditLogger } from '@carnil//compliance';
 
 // Globalization
-import { CurrencyManager } from '@carnil/sdk/globalization';
+import { CurrencyManager } from '@carnil//globalization';
 
 // Pricing Editor
-import { PricingEditor } from '@carnil/sdk/pricing-editor';
+import { PricingEditor } from '@carnil//pricing-editor';
 
 // Webhooks
-import { EventBus } from '@carnil/sdk/webhooks';
+import { EventBus } from '@carnil//webhooks';
 
 // Adapters
-import { expressAdapter } from '@carnil/sdk/adapters';
+import { expressAdapter } from '@carnil//adapters';
 ```
 
 ## Supported Providers

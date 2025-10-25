@@ -99,13 +99,13 @@ importers:
 
   examples/basic-usage:
     dependencies:
-      '@carnil/sdk':
+      '@carnil/':
         specifier: ^0.1.0
         version: link:../..
 
   examples/nextjs-app:
     dependencies:
-      '@carnil/sdk':
+      '@carnil/':
         specifier: ^0.1.0
         version: link:../..
       next:
@@ -139,7 +139,7 @@ importers:
 
   examples/react-example:
     dependencies:
-      '@carnil/sdk':
+      '@carnil/':
         specifier: ^0.1.0
         version: link:../..
       react:
@@ -154,7 +154,7 @@ importers:
 
   examples/saas-dashboard:
     dependencies:
-      '@carnil/sdk':
+      '@carnil/':
         specifier: ^0.1.0
         version: link:../..
       autoprefixer:
