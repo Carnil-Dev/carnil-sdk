@@ -1,6 +1,6 @@
 {
   "name": "@carnil/carnil-payments-sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A unified payments SDK for Stripe, Razorpay, and other payment providers",
   "private": false,
   "workspaces": [
