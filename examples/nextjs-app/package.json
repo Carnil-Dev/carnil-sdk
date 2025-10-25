@@ -9,11 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@carnil/core": "workspace:*",
-    "@carnil/stripe": "workspace:*",
-    "@carnil/razorpay": "workspace:*",
-    "@carnil/react": "workspace:*",
-    "@carnil/next": "workspace:*",
+    "@carnil/sdk": "^0.1.0",
     "next": "^14.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

@@ -8,8 +8,7 @@
     "dev": "node index.js"
   },
   "dependencies": {
-    "@carnil/core": "^0.1.0",
-    "@carnil/stripe": "^0.1.0"
+    "@carnil/sdk": "^0.1.0"
   },
   "keywords": [
     "carnil",

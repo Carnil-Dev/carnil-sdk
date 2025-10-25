@@ -1,4 +1,4 @@
-import { createCarnilHandler } from '@carnil/next';
+import { createCarnilHandler } from '@carnil/sdk/next';
 
 const handler = createCarnilHandler({
   provider: {
@@ -6,16 +6,16 @@ const handler = createCarnilHandler({
     apiKey: process.env.STRIPE_SECRET_KEY!,
     webhookSecret: process.env.STRIPE_WEBHOOK_SECRET!,
   },
-  identify: async (req) => {
+  identify: async req => {
     // In a real app, you'd extract the user ID from your auth system
     // For this example, we'll use a mock user ID
     const userId = req.headers.get('x-user-id') || 'demo-user-123';
-    return { 
+    return {
       customerId: userId,
       customerData: {
         name: 'Demo User',
         email: 'demo@example.com',
-      }
+      },
     };
   },
   corsHeaders: {

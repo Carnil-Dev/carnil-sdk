@@ -19,22 +19,8 @@
     "declarationMap": true,
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": ".",
-    "paths": {
-      "@carnil/core": ["./packages/core/src"],
-      "@carnil/core/*": ["./packages/core/src/*"],
-      "@carnil/stripe": ["./packages/stripe/src"],
-      "@carnil/stripe/*": ["./packages/stripe/src/*"],
-      "@carnil/razorpay": ["./packages/razorpay/src"],
-      "@carnil/razorpay/*": ["./packages/razorpay/src/*"],
-      "@carnil/react": ["./packages/react/src"],
-      "@carnil/react/*": ["./packages/react/src/*"],
-      "@carnil/next": ["./packages/next/src"],
-      "@carnil/next/*": ["./packages/next/src/*"],
-      "@carnil/adapters": ["./packages/adapters/src"],
-      "@carnil/adapters/*": ["./packages/adapters/src/*"]
-    }
+    "baseUrl": "."
   },
-  "include": ["packages/*/src/**/*"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.test.tsx"]
 }

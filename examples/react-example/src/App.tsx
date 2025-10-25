@@ -1,6 +1,6 @@
 import React from 'react';
-import { CarnilProvider } from '@carnil/react';
-import { useCustomer, usePayment } from '@carnil/react';
+import { CarnilProvider } from '@carnil/sdk/react';
+import { useCustomer, usePayment } from '@carnil/sdk/react';
 import './App.css';
 
 function PaymentForm() {
@@ -38,10 +38,12 @@ function PaymentForm() {
       <h2>Payment Form</h2>
       {customer && (
         <div className="customer-info">
-          <p>Customer: {customer.name} ({customer.email})</p>
+          <p>
+            Customer: {customer.name} ({customer.email})
+          </p>
         </div>
       )}
-      <button 
+      <button
         onClick={handlePayment}
         disabled={customerLoading || paymentLoading}
         className="pay-button"

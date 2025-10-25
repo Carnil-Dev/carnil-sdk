@@ -1,5 +1,5 @@
 // Basic usage example for Carnil SDK
-const { Carnil } = require('@carnil/core');
+const { Carnil } = require('@carnil/sdk');
 
 // Initialize Carnil with Stripe
 const carnil = new Carnil({
@@ -34,7 +34,6 @@ async function main() {
     console.log('Getting payment intent...');
     const retrievedPaymentIntent = await carnil.getPaymentIntent(paymentIntent.data.id);
     console.log('Payment intent retrieved:', retrievedPaymentIntent.data);
-
   } catch (error) {
     console.error('Error:', error.message);
   }
