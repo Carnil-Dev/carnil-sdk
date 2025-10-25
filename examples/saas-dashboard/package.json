@@ -1,0 +1,40 @@
+{
+  "name": "carnil-saas-dashboard",
+  "version": "0.1.0",
+  "description": "Complete SaaS dashboard with Carnil Payments SDK",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@carnil/core": "workspace:*",
+    "@carnil/stripe": "workspace:*",
+    "@carnil/razorpay": "workspace:*",
+    "@carnil/react": "workspace:*",
+    "@carnil/next": "workspace:*",
+    "@carnil/analytics": "workspace:*",
+    "@carnil/compliance": "workspace:*",
+    "@carnil/globalization": "workspace:*",
+    "@carnil/pricing-editor": "workspace:*",
+    "@carnil/webhooks": "workspace:*",
+    "next": "^14.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "recharts": "^2.8.0",
+    "lucide-react": "^0.294.0",
+    "tailwindcss": "^3.3.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "eslint": "^8.54.0",
+    "eslint-config-next": "^14.0.0",
+    "typescript": "^5.3.0"
+  }
+}
