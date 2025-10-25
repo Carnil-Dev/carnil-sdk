@@ -1,5 +1,5 @@
 {
-  "name": "@carnil",
+  "name": "@carnil/sdk",
   "version": "0.1.1",
   "description": "A unified payments SDK for Stripe, Razorpay, and other payment providers",
   "private": false,
