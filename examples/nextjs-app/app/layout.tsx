@@ -1,26 +1,11 @@
-import { CarnilProvider } from '@carnil/react';
+import ClientCarnilProvider from './components/client-carnil-provider';
 import './globals.css';
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <CarnilProvider
-          config={{
-            provider: {
-              provider: 'stripe', // or 'razorpay'
-              apiKey: process.env.STRIPE_SECRET_KEY!,
-              webhookSecret: process.env.STRIPE_WEBHOOK_SECRET!,
-            },
-            debug: true,
-          }}
-        >
-          {children}
-        </CarnilProvider>
+        <ClientCarnilProvider>{children}</ClientCarnilProvider>
       </body>
     </html>
   );

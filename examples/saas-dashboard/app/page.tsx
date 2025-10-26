@@ -1,28 +1,27 @@
 'use client';
 
-import { useState } from 'react';
-import { 
-  CreditCard, 
-  Users, 
-  DollarSign, 
-  TrendingUp, 
+import { useState, useEffect } from 'react';
+import {
+  CreditCard,
+  Users,
+  DollarSign,
+  TrendingUp,
   Settings,
   BarChart3,
   Shield,
   Globe,
-  Zap
+  Zap,
 } from 'lucide-react';
-import { useCustomer, usePayment, useSubscription } from '@carnil/react';
+import { useCustomer, useCarnil } from '@carnil/react';
 import { CustomerDashboard, AIUsageDashboard } from '@carnil/analytics';
 import { ComplianceDashboard } from '@carnil/compliance';
 import { PricingEditor } from '@carnil/pricing-editor';
 import { useAnalytics } from '@carnil/analytics';
 
-export default function SaaSDashboard() {
+function SaaSDashboardContent() {
   const [activeTab, setActiveTab] = useState('overview');
   const { customer, createCustomer, updateCustomer } = useCustomer();
-  const { createPaymentIntent, confirmPayment } = usePayment();
-  const { createSubscription, cancelSubscription } = useSubscription();
+  const carnil = useCarnil();
   const { analytics, loading: analyticsLoading } = useAnalytics(customer?.id || '');
 
   const handlePayment = async (amount: number) => {
@@ -33,26 +32,22 @@ export default function SaaSDashboard() {
       });
     }
 
-    const payment = await createPaymentIntent({
+    const payment = await carnil.createPaymentIntent({
       amount,
       currency: 'usd',
-      customer: customer?.id,
+      customerId: customer?.id,
+      captureMethod: 'automatic',
+      description: 'Test payment',
     });
 
-    const confirmed = await confirmPayment(payment.id);
-    console.log('Payment confirmed:', confirmed);
+    console.log('Payment intent created:', payment);
   };
 
   const handleSubscription = async () => {
     if (!customer) return;
 
-    const subscription = await createSubscription({
-      customer: customer.id,
-      priceId: 'price_monthly_10',
-      paymentMethod: 'pm_card_visa',
-    });
-
-    console.log('Subscription created:', subscription);
+    // Note: Subscription creation would need to be implemented in the core package
+    console.log('Subscription creation not yet implemented');
   };
 
   const tabs = [
@@ -228,10 +223,7 @@ export default function SaaSDashboard() {
               </div>
             ) : (
               <>
-                <CustomerDashboard
-                  customerId={customer?.id || 'demo-customer'}
-                  data={analytics}
-                />
+                <CustomerDashboard customerId={customer?.id || 'demo-customer'} data={analytics} />
                 <AIUsageDashboard
                   customerId={customer?.id || 'demo-customer'}
                   data={analytics?.aiUsage}
@@ -255,7 +247,9 @@ export default function SaaSDashboard() {
                     price: 10,
                     currency: 'USD',
                     interval: 'month',
+                    intervalCount: 1,
                     features: ['10 API calls', 'Basic support'],
+                    isPopular: false,
                     isActive: true,
                     sortOrder: 0,
                   },
@@ -265,7 +259,9 @@ export default function SaaSDashboard() {
                     price: 29,
                     currency: 'USD',
                     interval: 'month',
+                    intervalCount: 1,
                     features: ['100 API calls', 'Priority support', 'Analytics'],
+                    isPopular: true,
                     isActive: true,
                     sortOrder: 1,
                   },
@@ -276,9 +272,9 @@ export default function SaaSDashboard() {
                 createdAt: new Date(),
                 updatedAt: new Date(),
               }}
-              onPlanChange={(plan) => console.log('Plan changed:', plan)}
-              onSave={async (plan) => console.log('Saving plan:', plan)}
-              onPublish={async (plan) => console.log('Publishing plan:', plan)}
+              onPlanChange={plan => console.log('Plan changed:', plan)}
+              onSave={async plan => console.log('Saving plan:', plan)}
+              onPublish={async plan => console.log('Publishing plan:', plan)}
               currency="USD"
               supportedCurrencies={['USD', 'EUR', 'GBP']}
               features={['API Calls', 'Storage', 'Support', 'Analytics']}
@@ -350,4 +346,22 @@ export default function SaaSDashboard() {
       </main>
     </div>
   );
+}
+
+export default function SaaSDashboard() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-lg">Loading...</div>
+      </div>
+    );
+  }
+
+  return <SaaSDashboardContent />;
 }

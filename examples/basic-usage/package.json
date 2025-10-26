@@ -1,6 +1,6 @@
 {
   "name": "carnil-basic-example",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Basic usage example for Carnil SDK",
   "main": "index.js",
   "scripts": {
@@ -8,8 +8,8 @@
     "dev": "node index.js"
   },
   "dependencies": {
-    "@carnil/core": "^0.1.0",
-    "@carnil/stripe": "^0.1.0"
+    "@carnil/core": "^0.2.0",
+    "@carnil/stripe": "^0.2.0"
   },
   "keywords": [
     "carnil",

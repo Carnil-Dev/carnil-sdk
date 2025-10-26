@@ -1,4 +1,5 @@
 import { createCarnilHandler } from '@carnil/next';
+import '@carnil/stripe'; // Import to register the provider
 
 const handler = createCarnilHandler({
   provider: {

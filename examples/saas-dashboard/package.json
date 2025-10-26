@@ -1,6 +1,6 @@
 {
   "name": "carnil-saas-dashboard",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Complete SaaS dashboard with Carnil Payments SDK",
   "private": true,
   "scripts": {

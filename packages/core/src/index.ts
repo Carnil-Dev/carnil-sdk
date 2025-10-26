@@ -1,24 +1,8 @@
-// ============================================================================
 // Core Carnil Payments SDK
-// ============================================================================
-
-// Main Carnil class
 export { Carnil } from './carnil';
-
-// Types and interfaces
 export * from './types';
-
-// Provider interfaces
 export * from './providers/base';
-
-// Error classes and utilities
 export * from './errors';
-
-// ============================================================================
-// Re-exports for convenience
-// ============================================================================
-
-// Main exports
 export { Carnil as default } from './carnil';
 
 // Type exports
@@ -61,7 +45,6 @@ export type {
   ProviderRegistry,
 } from './providers/base';
 
-// Error exports
 export {
   CarnilError,
   CarnilValidationError,

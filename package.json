@@ -1,31 +1,29 @@
 {
-  "name": "@carnil/carnil-payments-sdk",
-  "version": "0.1.1",
+  "name": "@carnil/monorepo",
+  "version": "0.1.0",
+  "private": true,
   "description": "A unified payments SDK for Stripe, Razorpay, and other payment providers",
-  "private": false,
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "test": "vitest",
-    "lint": "eslint src --ext .ts,.tsx",
-    "type-check": "tsc --noEmit",
-    "clean": "rm -rf dist",
+    "build": "turbo run build",
+    "build:core": "pnpm --filter @carnil/core build",
+    "build:stripe": "pnpm --filter @carnil/stripe build",
+    "build:razorpay": "pnpm --filter @carnil/razorpay build",
+    "build:react": "pnpm --filter @carnil/react build",
+    "build:next": "pnpm --filter @carnil/next build",
+    "build:adapters": "pnpm --filter @carnil/adapters build",
+    "build:analytics": "pnpm --filter @carnil/analytics build",
+    "build:webhooks": "pnpm --filter @carnil/webhooks build",
+    "build:pricing-editor": "pnpm --filter @carnil/pricing-editor build",
+    "build:compliance": "pnpm --filter @carnil/compliance build",
+    "build:globalization": "pnpm --filter @carnil/globalization build",
+    "dev": "turbo run dev",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "type-check": "turbo run type-check",
+    "clean": "turbo run clean && rm -rf node_modules",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "npm run build && changeset publish --provenance",
-    "prepublishOnly": "npm run build",
-    "publish:all": "node scripts/build-and-publish.js publish-all",
-    "publish:core": "node scripts/build-and-publish.js publish core",
-    "publish:stripe": "node scripts/build-and-publish.js publish stripe",
-    "publish:razorpay": "node scripts/build-and-publish.js publish razorpay",
-    "publish:react": "node scripts/build-and-publish.js publish react",
-    "publish:next": "node scripts/build-and-publish.js publish next",
-    "publish:adapters": "node scripts/build-and-publish.js publish adapters",
-    "publish:analytics": "node scripts/build-and-publish.js publish analytics",
-    "publish:pricing-editor": "node scripts/build-and-publish.js publish pricing-editor",
-    "publish:webhooks": "node scripts/build-and-publish.js publish webhooks",
-    "publish:compliance": "node scripts/build-and-publish.js publish compliance",
-    "publish:globalization": "node scripts/build-and-publish.js publish globalization"
+    "release": "pnpm build && changeset publish --provenance"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
@@ -67,18 +65,5 @@
   "bugs": {
     "url": "https://github.com/Carnil-Dev/carnil-sdk/issues"
   },
-  "homepage": "https://carnil.dev",
-  "files": [
-    "packages/*/dist",
-    "packages/*/package.json",
-    "packages/*/README.md"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "main": ".eslintrc.js",
-  "directories": {
-    "doc": "docs",
-    "example": "examples"
-  }
+  "homepage": "https://carnil.dev"
 }

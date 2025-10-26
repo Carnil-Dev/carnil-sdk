@@ -1,14 +1,17 @@
 import React from 'react';
-import { CarnilProvider } from '@carnil/react';
-import { useCustomer, usePayment } from '@carnil/react';
+import { CarnilProvider, useCustomer, useCarnil } from '@carnil/react';
+import '@carnil/stripe'; // Import to register the provider
 import './App.css';
 
 function PaymentForm() {
-  const { customer, createCustomer, loading: customerLoading } = useCustomer();
-  const { createPaymentIntent, loading: paymentLoading } = usePayment();
+  const { customer, createCustomer, isLoading: customerLoading } = useCustomer();
+  const carnil = useCarnil();
+  const [isPaymentLoading, setIsPaymentLoading] = React.useState(false);
 
   const handlePayment = async () => {
     try {
+      setIsPaymentLoading(true);
+
       // Create customer if doesn't exist
       if (!customer) {
         await createCustomer({
@@ -17,8 +20,8 @@ function PaymentForm() {
         });
       }
 
-      // Create payment intent
-      const paymentIntent = await createPaymentIntent({
+      // Create payment intent using carnil instance
+      const paymentIntent = await carnil.createPaymentIntent({
         customerId: customer?.id,
         amount: 2000, // $20.00
         currency: 'usd',
@@ -29,7 +32,9 @@ function PaymentForm() {
       alert('Payment intent created successfully!');
     } catch (error) {
       console.error('Payment error:', error);
-      alert('Payment failed: ' + error.message);
+      alert('Payment failed: ' + (error as Error).message);
+    } finally {
+      setIsPaymentLoading(false);
     }
   };
 
@@ -45,10 +50,10 @@ function PaymentForm() {
       )}
       <button
         onClick={handlePayment}
-        disabled={customerLoading || paymentLoading}
+        disabled={customerLoading || isPaymentLoading}
         className="pay-button"
       >
-        {customerLoading || paymentLoading ? 'Processing...' : 'Pay $20.00'}
+        {customerLoading || isPaymentLoading ? 'Processing...' : 'Pay $20.00'}
       </button>
     </div>
   );
@@ -57,10 +62,13 @@ function PaymentForm() {
 function App() {
   return (
     <CarnilProvider
-      providerName="stripe"
       config={{
-        apiKey: process.env.REACT_APP_STRIPE_SECRET_KEY!,
-        webhookSecret: process.env.REACT_APP_STRIPE_WEBHOOK_SECRET!,
+        provider: {
+          provider: 'stripe', // or 'razorpay'
+          apiKey: process.env.REACT_APP_STRIPE_SECRET_KEY!,
+          webhookSecret: process.env.REACT_APP_STRIPE_WEBHOOK_SECRET!,
+        },
+        debug: true,
       }}
     >
       <div className="App">

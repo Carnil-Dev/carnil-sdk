@@ -14,16 +14,21 @@ A comprehensive, multi-provider payments SDK that abstracts payment gateways beh
 
 ## 📦 Packages
 
-| Package                  | Description                        | Version |
-| ------------------------ | ---------------------------------- | ------- |
-| `@carnil/core`           | Core SDK with provider abstraction | `0.1.0` |
-| `@carnil/stripe`         | Stripe provider implementation     | `0.1.0` |
-| `@carnil/razorpay`       | Razorpay provider implementation   | `0.1.0` |
-| `@carnil/react`          | React hooks and components         | `0.1.0` |
-| `@carnil/next`           | Next.js App Router integration     | `0.1.0` |
-| `@carnil/adapters`       | Framework adapters (Express, Hono) | `0.1.0` |
-| `@carnil/analytics`      | AI & usage analytics               | `0.1.0` |
-| `@carnil/pricing-editor` | No-code pricing editor             | `0.1.0` |
+This is a monorepo containing multiple packages that work together. Install only what you need!
+
+| Package                  | Description                        | Version | Size  |
+| ------------------------ | ---------------------------------- | ------- | ----- |
+| `@carnil/core`           | Core SDK with provider abstraction | `0.2.0` | 308KB |
+| `@carnil/stripe`         | Stripe provider implementation     | `0.2.0` | 136KB |
+| `@carnil/razorpay`       | Razorpay provider implementation   | `0.2.0` | 120KB |
+| `@carnil/react`          | React hooks and components         | `0.2.0` | 104KB |
+| `@carnil/next`           | Next.js App Router integration     | `0.2.0` | 112KB |
+| `@carnil/adapters`       | Framework adapters (Express, Hono) | `0.2.0` | 96KB  |
+| `@carnil/analytics`      | AI & usage analytics               | `0.2.0` | 240KB |
+| `@carnil/webhooks`       | Webhook management utilities       | `0.2.0` | 116KB |
+| `@carnil/pricing-editor` | No-code pricing editor             | `0.2.0` | 508KB |
+| `@carnil/compliance`     | PCI-DSS & GDPR compliance tools    | `0.2.0` | 448KB |
+| `@carnil/globalization`  | i18n and localization support      | `0.2.0` | 376KB |
 
 ## 🛠 Installation
 

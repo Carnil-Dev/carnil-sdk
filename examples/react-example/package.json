@@ -1,12 +1,12 @@
 {
   "name": "carnil-react-example",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React example for Carnil SDK",
   "private": true,
   "dependencies": {
-    "@carnil/core": "^0.1.0",
-    "@carnil/stripe": "^0.1.0",
-    "@carnil/react": "^0.1.0",
+    "@carnil/core": "^0.2.0",
+    "@carnil/stripe": "^0.2.0",
+    "@carnil/react": "^0.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1"

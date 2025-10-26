@@ -1,16 +1,16 @@
 'use client';
 
 import { useCustomer } from '@carnil/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function Home() {
+function CustomerManagement() {
   const { customer, createCustomer, updateCustomer, isLoading, error } = useCustomer();
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
 
   const handleCreateCustomer = async () => {
     if (!email || !name) return;
-    
+
     await createCustomer({
       email,
       name,
@@ -19,7 +19,7 @@ export default function Home() {
 
   const handleUpdateCustomer = async () => {
     if (!customer?.id) return;
-    
+
     await updateCustomer(customer.id, {
       name: name || customer.name,
       email: email || customer.email,
@@ -45,12 +45,12 @@ export default function Home() {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Carnil Payments SDK Example</h1>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Customer Management */}
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold mb-4">Customer Management</h2>
-          
+
           {customer ? (
             <div className="space-y-4">
               <div>
@@ -59,20 +59,20 @@ export default function Home() {
                 <p>Email: {customer.email}</p>
                 <p>ID: {customer.id}</p>
               </div>
-              
+
               <div className="space-y-2">
                 <input
                   type="text"
                   placeholder="New name"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={e => setName(e.target.value)}
                   className="w-full p-2 border rounded"
                 />
                 <input
                   type="email"
                   placeholder="New email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={e => setEmail(e.target.value)}
                   className="w-full p-2 border rounded"
                 />
                 <button
@@ -90,14 +90,14 @@ export default function Home() {
                   type="text"
                   placeholder="Customer name"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={e => setName(e.target.value)}
                   className="w-full p-2 border rounded"
                 />
                 <input
                   type="email"
                   placeholder="Customer email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={e => setEmail(e.target.value)}
                   className="w-full p-2 border rounded"
                 />
                 <button
@@ -134,14 +134,31 @@ export default function Home() {
       <div className="mt-8 bg-gray-100 p-6 rounded-lg">
         <h2 className="text-xl font-semibold mb-4">Provider Information</h2>
         <p className="text-gray-600">
-          This example is configured to use Stripe. You can switch to Razorpay by changing the provider in the layout.tsx file.
+          This example is configured to use Stripe. You can switch to Razorpay by changing the
+          provider in the layout.tsx file.
         </p>
         <div className="mt-4">
-          <code className="bg-gray-200 p-2 rounded text-sm">
-            Provider: Stripe (Test Mode)
-          </code>
+          <code className="bg-gray-200 p-2 rounded text-sm">Provider: Stripe (Test Mode)</code>
         </div>
       </div>
     </div>
   );
+}
+
+export default function Home() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-lg">Loading...</div>
+      </div>
+    );
+  }
+
+  return <CustomerManagement />;
 }
