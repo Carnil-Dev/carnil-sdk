@@ -1,0 +1,9 @@
+{
+  "extends": "@carnil/config/typescript",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@carnil/*": ["packages/*/src"]
+    }
+  }
+}

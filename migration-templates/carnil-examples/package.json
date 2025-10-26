@@ -1,0 +1,30 @@
+{
+  "name": "carnil-examples",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Example applications demonstrating Carnil SDK usage",
+  "scripts": {
+    "install:all": "pnpm -r install",
+    "build:all": "pnpm -r build",
+    "dev:basic": "pnpm --filter basic-usage dev",
+    "dev:nextjs": "pnpm --filter nextjs-app dev",
+    "dev:react": "pnpm --filter react-example dev",
+    "dev:saas": "pnpm --filter saas-dashboard dev"
+  },
+  "keywords": [
+    "carnil",
+    "examples",
+    "payments"
+  ],
+  "author": "Carnil",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_ORG/carnil-examples.git"
+  },
+  "packageManager": "pnpm@8.12.0",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}
