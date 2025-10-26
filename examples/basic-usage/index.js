@@ -1,5 +1,5 @@
 // Basic usage example for Carnil SDK
-const { Carnil } = require('@carnil/sdk');
+const { Carnil } = require('@carnil/core');
 
 // Initialize Carnil with Stripe
 const carnil = new Carnil({

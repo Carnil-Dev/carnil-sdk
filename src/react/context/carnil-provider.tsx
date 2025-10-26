@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { Carnil } from '../../carnil';
-import type { CarnilConfig } from '../../types';
+import { Carnil, CarnilConfig } from '@carnil/core';
 
 // ============================================================================
 // Carnil Context

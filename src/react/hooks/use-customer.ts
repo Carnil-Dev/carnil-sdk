@@ -7,7 +7,7 @@ import type {
   CustomerListRequest,
   ListResponse,
   CarnilResponse,
-} from '../../types';
+} from '@carnil/core';
 
 // ============================================================================
 // Customer Hook State

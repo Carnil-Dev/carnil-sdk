@@ -1,6 +1,5 @@
 import { Context, Hono } from 'hono';
-import { Carnil } from '../carnil';
-import type { CarnilConfig } from '../types';
+import { Carnil, CarnilConfig } from '@carnil/core';
 
 // ============================================================================
 // Hono Adapter Configuration

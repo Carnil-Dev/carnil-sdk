@@ -105,10 +105,7 @@ export function PricingTierCard({
 
   return (
     <div
-      ref={node => {
-        drag(node);
-        drop(node);
-      }}
+      ref={node => drag(drop(node))}
       className={cn(
         'relative bg-white rounded-lg border-2 transition-all duration-200 cursor-pointer',
         isSelected ? 'border-blue-500 shadow-lg' : 'border-gray-200 hover:border-gray-300',

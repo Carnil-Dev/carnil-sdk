@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { Carnil } from '../carnil';
-import type { CarnilConfig } from '../types';
+import { Carnil, CarnilConfig } from '@carnil/core';
 
 // ============================================================================
 // Express Adapter Configuration

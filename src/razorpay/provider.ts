@@ -23,10 +23,10 @@ import type {
   ProviderConfig,
   ListPaymentMethodsParams,
   ListRefundsParams,
-} from '../types';
+} from '@carnil/core';
 
-import type { CarnilProvider } from '../providers/base';
-import { CarnilError, createProviderError } from '../errors';
+import type { CarnilProvider } from '@carnil/core';
+import { CarnilError, createProviderError } from '@carnil/core';
 
 export class RazorpayProvider implements CarnilProvider {
   public readonly name = 'razorpay';

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { PaymentProvider } from '../../providers/base';
+import { PaymentProvider } from '@carnil/core';
 
 // ============================================================================
 // Adyen Provider Schemas

@@ -1,42 +1,18 @@
 // ============================================================================
-// Carnil Payments SDK - Unified Package
+// Core Carnil Payments SDK
 // ============================================================================
 
-// Core exports
+// Main Carnil class
 export { Carnil } from './carnil';
+
+// Types and interfaces
 export * from './types';
+
+// Provider interfaces
 export * from './providers/base';
+
+// Error classes and utilities
 export * from './errors';
-
-// Provider exports
-export { StripeProvider, createStripeProvider } from './stripe';
-export { RazorpayProvider, createRazorpayProvider } from './razorpay';
-
-// Framework integrations
-export { CarnilProvider, useCarnilContext, useCarnil, useCustomer, useCustomerList } from './react';
-export { createCarnilHandler } from './next';
-
-// Adapters
-export {
-  createCarnilExpressHandler,
-  createCarnilExpressWebhookHandler,
-  setupCarnilExpress,
-} from './adapters';
-
-// Analytics
-export { CustomerDashboard } from './analytics';
-
-// Pricing Editor
-export { PricingEditor } from './pricing-editor';
-
-// Webhooks
-export { EventBus } from './webhooks';
-
-// Compliance
-export { AuditLogger } from './compliance';
-
-// Globalization
-export { CurrencyManager } from './globalization';
 
 // ============================================================================
 // Re-exports for convenience
@@ -74,6 +50,7 @@ export type {
 } from './types';
 
 export type {
+  CarnilProvider,
   CustomerProvider,
   PaymentProvider,
   SubscriptionProvider,

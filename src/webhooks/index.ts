@@ -7,7 +7,7 @@ import { WebhookEvent } from './event-bus/event-bus';
 export { EventBus } from './event-bus/event-bus';
 
 // Re-export core types for convenience
-export type { CarnilResponse } from '../types';
+export type { CarnilResponse } from '@carnil/core';
 export type { WebhookEvent } from './event-bus/event-bus';
 
 // Webhook event types

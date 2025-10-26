@@ -1,6 +1,6 @@
 import React from 'react';
-import { CarnilProvider } from '@carnil/sdk/react';
-import { useCustomer, usePayment } from '@carnil/sdk/react';
+import { CarnilProvider } from '@carnil/react';
+import { useCustomer, usePayment } from '@carnil/react';
 import './App.css';
 
 function PaymentForm() {

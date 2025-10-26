@@ -27,10 +27,10 @@ export type {
   WebhookEvent,
   UsageMetrics,
   AIUsageMetrics,
-} from '../types';
+} from '@carnil/core';
 
 // Import ProviderConfig separately
-import type { ProviderConfig } from '../types';
+import type { ProviderConfig } from '@carnil/core';
 
 // Provider factory function
 export function createStripeProvider(config: ProviderConfig) {
@@ -38,7 +38,7 @@ export function createStripeProvider(config: ProviderConfig) {
 }
 
 // Register provider with Carnil
-import { Carnil } from '../carnil';
+import { Carnil } from '@carnil/core';
 import { StripeProvider } from './provider';
 
 Carnil.registerProvider('stripe', {

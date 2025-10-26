@@ -34,7 +34,7 @@ export type {
   AIUsageMetrics,
   CarnilConfig,
   CarnilResponse,
-} from '../types';
+} from '@carnil/core';
 
 // Hook types
 export type { UseCustomerReturn } from './hooks/use-customer';

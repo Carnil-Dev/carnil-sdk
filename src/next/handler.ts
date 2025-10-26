@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Carnil } from '../carnil';
-import type { CarnilConfig } from '../types';
+import { Carnil, CarnilConfig } from '@carnil/core';
 
 // ============================================================================
 // Carnil Handler Configuration

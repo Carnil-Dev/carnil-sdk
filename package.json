@@ -1,123 +1,45 @@
 {
-  "name": "@carnil/sdk",
+  "name": "@carnil/carnil-payments-sdk",
   "version": "0.1.1",
   "description": "A unified payments SDK for Stripe, Razorpay, and other payment providers",
   "private": false,
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    },
-    "./core": {
-      "import": "./dist/core/index.mjs",
-      "require": "./dist/core/index.js",
-      "types": "./dist/core/index.d.ts"
-    },
-    "./stripe": {
-      "import": "./dist/stripe/index.mjs",
-      "require": "./dist/stripe/index.js",
-      "types": "./dist/stripe/index.d.ts"
-    },
-    "./razorpay": {
-      "import": "./dist/razorpay/index.mjs",
-      "require": "./dist/razorpay/index.js",
-      "types": "./dist/razorpay/index.d.ts"
-    },
-    "./react": {
-      "import": "./dist/react/index.mjs",
-      "require": "./dist/react/index.js",
-      "types": "./dist/react/index.d.ts"
-    },
-    "./next": {
-      "import": "./dist/next/index.mjs",
-      "require": "./dist/next/index.js",
-      "types": "./dist/next/index.d.ts"
-    },
-    "./adapters": {
-      "import": "./dist/adapters/index.mjs",
-      "require": "./dist/adapters/index.js",
-      "types": "./dist/adapters/index.d.ts"
-    },
-    "./analytics": {
-      "import": "./dist/analytics/index.mjs",
-      "require": "./dist/analytics/index.js",
-      "types": "./dist/analytics/index.d.ts"
-    },
-    "./pricing-editor": {
-      "import": "./dist/pricing-editor/index.mjs",
-      "require": "./dist/pricing-editor/index.js",
-      "types": "./dist/pricing-editor/index.d.ts"
-    },
-    "./webhooks": {
-      "import": "./dist/webhooks/index.mjs",
-      "require": "./dist/webhooks/index.js",
-      "types": "./dist/webhooks/index.d.ts"
-    },
-    "./compliance": {
-      "import": "./dist/compliance/index.mjs",
-      "require": "./dist/compliance/index.js",
-      "types": "./dist/compliance/index.d.ts"
-    },
-    "./globalization": {
-      "import": "./dist/globalization/index.mjs",
-      "require": "./dist/globalization/index.js",
-      "types": "./dist/globalization/index.d.ts"
-    }
-  },
   "scripts": {
     "build": "tsup",
-    "dev": "tsup --watch",
-    "test": "vitest",
-    "lint": "eslint src --ext .ts,.tsx",
-    "type-check": "tsc --noEmit",
-    "clean": "rm -rf dist",
-    "prepublishOnly": "pnpm build",
-    "release": "pnpm build && pnpm publish",
+    "dev": "turbo run dev",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "type-check": "turbo run type-check",
+    "clean": "turbo run clean",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "publish": "pnpm build && changeset publish --provenance"
-  },
-  "dependencies": {
-    "zod": "^3.22.4",
-    "stripe": "^14.7.0",
-    "razorpay": "^2.9.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "express": "^4.18.2",
-    "hono": "^3.12.0",
-    "next": "^14.0.0",
-    "recharts": "^2.8.0",
-    "lucide-react": "^0.294.0",
-    "react-dnd": "^16.0.1",
-    "react-dnd-html5-backend": "^16.0.1",
-    "framer-motion": "^10.16.0",
-    "clsx": "^2.0.0",
-    "tailwind-merge": "^2.0.0"
+    "release": "turbo run build && changeset publish --provenance",
+    "prepublishOnly": "turbo run build",
+    "publish:all": "node scripts/build-and-publish.js publish-all",
+    "publish:core": "node scripts/build-and-publish.js publish core",
+    "publish:stripe": "node scripts/build-and-publish.js publish stripe",
+    "publish:razorpay": "node scripts/build-and-publish.js publish razorpay",
+    "publish:react": "node scripts/build-and-publish.js publish react",
+    "publish:next": "node scripts/build-and-publish.js publish next",
+    "publish:adapters": "node scripts/build-and-publish.js publish adapters",
+    "publish:analytics": "node scripts/build-and-publish.js publish analytics",
+    "publish:pricing-editor": "node scripts/build-and-publish.js publish pricing-editor",
+    "publish:webhooks": "node scripts/build-and-publish.js publish webhooks",
+    "publish:compliance": "node scripts/build-and-publish.js publish compliance",
+    "publish:globalization": "node scripts/build-and-publish.js publish globalization"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
     "@types/node": "^20.10.0",
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.0",
-    "@types/express": "^4.17.21",
     "@typescript-eslint/eslint-plugin": "^6.13.0",
     "@typescript-eslint/parser": "^6.13.0",
     "eslint": "^8.54.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
     "prettier": "^3.1.0",
-    "tsup": "^7.2.0",
+    "tsup": "^8.0.0",
+    "turbo": "^2.5.8",
     "typescript": "^5.3.0",
     "vitest": "^1.0.0"
-  },
-  "peerDependencies": {
-    "react": ">=18.0.0",
-    "react-dom": ">=18.0.0",
-    "typescript": ">=5.0.0"
   },
   "engines": {
     "node": ">=18.0.0",
@@ -147,12 +69,14 @@
   },
   "homepage": "https://carnil.dev",
   "files": [
-    "dist",
-    "README.md"
+    "packages/*/dist",
+    "packages/*/package.json",
+    "packages/*/README.md"
   ],
   "publishConfig": {
     "access": "public"
   },
+  "main": ".eslintrc.js",
   "directories": {
     "doc": "docs",
     "example": "examples"

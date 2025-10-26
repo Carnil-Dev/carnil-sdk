@@ -27,9 +27,9 @@ export type {
   WebhookEvent,
   UsageMetrics,
   AIUsageMetrics,
-} from '../types';
+} from '@carnil/core';
 
-import type { ProviderConfig } from '../types';
+import type { ProviderConfig } from '@carnil/core';
 
 // Provider factory function
 export function createRazorpayProvider(config: ProviderConfig) {
@@ -37,7 +37,7 @@ export function createRazorpayProvider(config: ProviderConfig) {
 }
 
 // Register provider with Carnil
-import { Carnil } from '../carnil';
+import { Carnil } from '@carnil/core';
 import { RazorpayProvider } from './provider';
 
 Carnil.registerProvider('razorpay', {

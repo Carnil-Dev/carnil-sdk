@@ -41,4 +41,4 @@ export type {
   AIUsageMetrics,
   CarnilConfig,
   CarnilResponse,
-} from '../types';
+} from '@carnil/core';

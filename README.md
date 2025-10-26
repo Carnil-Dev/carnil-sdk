@@ -1,29 +1,63 @@
-# Carnil SDK
+# Carnil Payments SDK
 
-A unified payments SDK for Stripe, Razorpay, and other payment providers with React, Next.js, and framework integrations.
+A comprehensive, multi-provider payments SDK that abstracts payment gateways behind a unified API. Built with TypeScript, supporting Stripe, Razorpay, and more.
 
-## Installation
+## 🚀 Features
+
+- **Multi-Provider Support**: Unified API for Stripe, Razorpay, and other payment gateways
+- **Framework Agnostic**: Works with Next.js, Express, Hono, and more
+- **React Integration**: Hooks and components for seamless frontend integration
+- **Type Safety**: Full TypeScript support with comprehensive type definitions
+- **Analytics & Usage Tracking**: Built-in analytics for AI/LLM usage and payment metrics
+- **No-Code Pricing Editor**: Visual pricing plan designer with A/B testing
+- **Advanced Features**: Webhooks, caching, error handling, and more
+
+## 📦 Packages
+
+| Package                  | Description                        | Version |
+| ------------------------ | ---------------------------------- | ------- |
+| `@carnil/core`           | Core SDK with provider abstraction | `0.1.0` |
+| `@carnil/stripe`         | Stripe provider implementation     | `0.1.0` |
+| `@carnil/razorpay`       | Razorpay provider implementation   | `0.1.0` |
+| `@carnil/react`          | React hooks and components         | `0.1.0` |
+| `@carnil/next`           | Next.js App Router integration     | `0.1.0` |
+| `@carnil/adapters`       | Framework adapters (Express, Hono) | `0.1.0` |
+| `@carnil/analytics`      | AI & usage analytics               | `0.1.0` |
+| `@carnil/pricing-editor` | No-code pricing editor             | `0.1.0` |
+
+## 🛠 Installation
 
 ```bash
-npm install @carnil/sdk
-# or
-yarn add @carnil/sdk
-# or
-pnpm add @carnil/sdk
+# Install the core package
+npm install @carnil/core
+
+# Install provider packages
+npm install @carnil/stripe @carnil/razorpay
+
+# Install React integration
+npm install @carnil/react
+
+# Install framework adapters
+npm install @carnil/next @carnil/adapters
+
+# Install advanced features
+npm install @carnil/analytics @carnil/pricing-editor
 ```
 
-## Quick Start
+## 🚀 Quick Start
 
-### Basic Usage
+### 1. Basic Setup
 
 ```typescript
-import { Carnil } from '@carnil/sdk';
+import { Carnil } from '@carnil/core';
+import '@carnil/stripe'; // Auto-registers Stripe provider
 
+// Initialize with Stripe
 const carnil = new Carnil({
   provider: {
     provider: 'stripe',
-    apiKey: process.env.STRIPE_SECRET_KEY,
-    webhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
+    apiKey: process.env.STRIPE_SECRET_KEY!,
+    webhookSecret: process.env.STRIPE_WEBHOOK_SECRET!,
   },
 });
 
@@ -35,25 +69,25 @@ const customer = await carnil.createCustomer({
 
 // Create a payment intent
 const paymentIntent = await carnil.createPaymentIntent({
-  customerId: customer.data.id,
+  customerId: customer.id,
   amount: 2000, // $20.00
   currency: 'usd',
-  description: 'Test payment',
 });
 ```
 
-### React Integration
+### 2. React Integration
 
-```typescript
-import { CarnilProvider, useCustomer } from '@carnil/sdk/react';
+```tsx
+import { CarnilProvider } from '@carnil/react';
+import { useCustomer, usePayment } from '@carnil/react';
 
 function App() {
   return (
     <CarnilProvider
       providerName="stripe"
       config={{
-        apiKey: process.env.REACT_APP_STRIPE_SECRET_KEY,
-        webhookSecret: process.env.REACT_APP_STRIPE_WEBHOOK_SECRET,
+        apiKey: process.env.STRIPE_SECRET_KEY!,
+        webhookSecret: process.env.STRIPE_WEBHOOK_SECRET!,
       }}
     >
       <PaymentForm />
@@ -63,6 +97,7 @@ function App() {
 
 function PaymentForm() {
   const { customer, createCustomer } = useCustomer();
+  const { createPaymentIntent } = usePayment();
 
   const handlePayment = async () => {
     if (!customer) {
@@ -71,18 +106,25 @@ function PaymentForm() {
         name: 'John Doe',
       });
     }
-    // ... rest of payment logic
+
+    const paymentIntent = await createPaymentIntent({
+      customerId: customer?.id,
+      amount: 2000,
+      currency: 'usd',
+    });
+
+    // Handle payment confirmation
   };
 
-  return <button onClick={handlePayment}>Pay Now</button>;
+  return <button onClick={handlePayment}>Pay $20.00</button>;
 }
 ```
 
-### Next.js Integration
+### 3. Next.js App Router
 
 ```typescript
 // app/api/carnil/route.ts
-import { createCarnilHandler } from '@carnil/sdk/next';
+import { createCarnilHandler } from '@carnil/next';
 
 const handler = createCarnilHandler({
   provider: {
@@ -91,112 +133,193 @@ const handler = createCarnilHandler({
     webhookSecret: process.env.STRIPE_WEBHOOK_SECRET!,
   },
   identify: async req => {
-    const userId = req.headers.get('x-user-id') || 'demo-user-123';
-    return {
-      customerId: userId,
-      customerData: {
-        name: 'Demo User',
-        email: 'demo@example.com',
-      },
-    };
+    // Extract user ID from your auth system
+    const userId = req.headers.get('x-user-id');
+    return { customerId: userId };
   },
 });
 
 export { handler as POST };
 ```
 
-## Module Exports
-
-The SDK is organized into modules that can be imported individually:
-
-### Core Module
+### 4. Express Integration
 
 ```typescript
-import { Carnil, CarnilError } from '@carnil/sdk';
-// or
-import { Carnil, CarnilError } from '@carnil/sdk/core';
+import express from 'express';
+import { expressCarnilHandler } from '@carnil/adapters';
+
+const app = express();
+
+app.use(
+  '/api/carnil',
+  expressCarnilHandler({
+    providerName: 'stripe',
+    config: {
+      apiKey: process.env.STRIPE_SECRET_KEY!,
+      webhookSecret: process.env.STRIPE_WEBHOOK_SECRET!,
+    },
+    identify: async req => {
+      // Extract user ID from your auth system
+      const userId = req.headers['x-user-id'];
+      return { customerId: userId };
+    },
+  })
+);
 ```
 
-### Provider Modules
+## 🔧 Advanced Features
+
+### Analytics & Usage Tracking
 
 ```typescript
-import { StripeProvider } from '@carnil/sdk/stripe';
-import { RazorpayProvider } from '@carnil/sdk/razorpay';
+import { CarnilAnalytics } from '@carnil/analytics';
+
+const analytics = new CarnilAnalytics(usageTracker);
+
+// Track usage
+await analytics.trackUsage('customer-123', 'api-calls', 100);
+
+// Track AI usage
+await analytics.trackAIUsage('customer-123', 'gpt-4', 1500, 0.03);
+
+// Get analytics
+const report = await analytics.getCustomerReport('customer-123', 'month');
 ```
 
-### Framework Integrations
+### No-Code Pricing Editor
+
+```tsx
+import { PricingEditor } from '@carnil/pricing-editor';
+
+function PricingPage() {
+  return (
+    <PricingEditor
+      initialPlan={pricingPlan}
+      onPlanChange={plan => console.log('Plan changed:', plan)}
+      onSave={async plan => {
+        await savePricingPlan(plan);
+      }}
+      onPublish={async plan => {
+        await publishPricingPlan(plan);
+      }}
+      currency="USD"
+      supportedCurrencies={['USD', 'EUR', 'GBP']}
+      features={['API Calls', 'Storage', 'Support']}
+    />
+  );
+}
+```
+
+## 🌍 Multi-Provider Support
+
+### Stripe
 
 ```typescript
-import { CarnilProvider, useCustomer } from '@carnil/sdk/react';
-import { createCarnilHandler } from '@carnil/sdk/next';
+import { Carnil } from '@carnil/core';
+import '@carnil/stripe';
+
+const carnil = new Carnil({
+  provider: {
+    provider: 'stripe',
+    apiKey: process.env.STRIPE_SECRET_KEY!,
+    webhookSecret: process.env.STRIPE_WEBHOOK_SECRET!,
+  },
+});
 ```
 
-### Additional Modules
+### Razorpay
 
 ```typescript
-// Analytics
-import { CustomerDashboard } from '@carnil/sdk/analytics';
+import { Carnil } from '@carnil/core';
+import '@carnil/razorpay';
 
-// Compliance
-import { AuditLogger } from '@carnil/sdk/compliance';
-
-// Globalization
-import { CurrencyManager } from '@carnil/sdk/globalization';
-
-// Pricing Editor
-import { PricingEditor } from '@carnil/sdk/pricing-editor';
-
-// Webhooks
-import { EventBus } from '@carnil/sdk/webhooks';
-
-// Adapters
-import { expressAdapter } from '@carnil/sdk/adapters';
+const carnil = new Carnil({
+  provider: {
+    provider: 'razorpay',
+    keyId: process.env.RAZORPAY_KEY_ID!,
+    keySecret: process.env.RAZORPAY_KEY_SECRET!,
+    webhookSecret: process.env.RAZORPAY_WEBHOOK_SECRET!,
+  },
+});
 ```
 
-## Supported Providers
+## 📊 Analytics Dashboard
 
-- **Stripe** - Full support for all Stripe features
-- **Razorpay** - Complete Razorpay integration
-- **Custom Providers** - Extend the base provider class
+```tsx
+import { CustomerDashboard, AIUsageDashboard } from '@carnil/analytics';
 
-## Features
+function AnalyticsPage() {
+  return (
+    <div>
+      <CustomerDashboard customerId="customer-123" data={analyticsData} />
+      <AIUsageDashboard customerId="customer-123" data={aiAnalyticsData} />
+    </div>
+  );
+}
+```
 
-- 🚀 **Unified API** - Single interface for all payment providers
-- ⚛️ **React Integration** - Hooks and components for React apps
-- 🔄 **Next.js Support** - API routes and server components
-- 📊 **Analytics** - Built-in analytics and reporting
-- 🔒 **Compliance** - GDPR, audit logging, and data protection
-- 🌍 **Globalization** - Multi-currency and localization support
-- 🎨 **Pricing Editor** - Visual pricing management
-- 🔗 **Webhooks** - Event handling and workflow automation
-- 🛠️ **Adapters** - Express, Hono, and other framework adapters
+## 🧪 Testing
 
-## Examples
+```bash
+# Run all tests
+npm test
 
-Check out the `examples/` directory for complete examples:
+# Run tests for specific package
+npm test -- --testPathPattern=packages/core
 
-- **Basic Usage** - Simple Node.js example
-- **React Example** - React app with hooks
-- **Next.js App** - Full Next.js application
-- **SaaS Dashboard** - Complete dashboard with all features
+# Run tests with coverage
+npm test -- --coverage
+```
 
-## Documentation
+## 📚 Documentation
 
-- [Quick Start Guide](./QUICK_START.md)
-- [Tutorials](./docs/TUTORIALS.md)
-- [API Reference](./docs/API.md)
-- [Deployment Guide](./docs/DEPLOYMENT.md)
+- [API Reference](./docs/api-reference.md)
+- [Provider Guide](./docs/providers.md)
+- [React Integration](./docs/react-integration.md)
+- [Analytics Guide](./docs/analytics.md)
+- [Pricing Editor](./docs/pricing-editor.md)
+- [Migration Guide](./docs/migration.md)
 
-## Contributing
+## 🤝 Contributing
 
-See [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for details.
+We welcome contributions! Please see our [Contributing Guide](./CONTRIBUTING.md) for details.
 
-## License
+### Development Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/Carnil-Dev/carnil-sdk.git
+cd carnil-sdk
+
+# Install dependencies
+pnpm install
+
+# Build all packages
+pnpm build
+
+# Run development server
+pnpm dev
+```
+
+## 📄 License
 
 MIT License - see [LICENSE](./LICENSE) for details.
 
-## Support
+## 🆘 Support
 
-- 📧 Email: hello@carnil.dev
-- 🐛 Issues: [GitHub Issues](https://github.com/Carnil-Dev/carnil-sdk/issues)
-- 📖 Docs: [carnil.dev](https://carnil.dev)
+- [GitHub Issues](https://github.com/Carnil-Dev/carnil-sdk/issues)
+- [Discord Community](https://discord.gg/carnil)
+- [Documentation](https://docs.carnil.dev)
+
+## 🗺 Roadmap
+
+- [ ] Additional payment providers (PayPal, Adyen, Paystack)
+- [ ] Advanced webhook management
+- [ ] Migration tools for existing billing systems
+- [ ] Plugin system for custom features
+- [ ] CLI tools for development
+- [ ] Integration marketplace
+
+---
+
+Built with ❤️ by the Carnil team

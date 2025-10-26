@@ -19,7 +19,21 @@
     "declarationMap": true,
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@carnil/core": ["./src"],
+      "@carnil/core/*": ["./src/*"],
+      "@carnil/stripe": ["./src/stripe"],
+      "@carnil/stripe/*": ["./src/stripe/*"],
+      "@carnil/razorpay": ["./src/razorpay"],
+      "@carnil/razorpay/*": ["./src/razorpay/*"],
+      "@carnil/react": ["./src/react"],
+      "@carnil/react/*": ["./src/react/*"],
+      "@carnil/next": ["./src/next"],
+      "@carnil/next/*": ["./src/next/*"],
+      "@carnil/adapters": ["./src/adapters"],
+      "@carnil/adapters/*": ["./src/adapters/*"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.test.tsx"]
